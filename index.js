@@ -61,6 +61,7 @@ let heart = {
   position: initPosition(),
 };
 
+//Obstacle
 let dinding1 = {
   position: {
     x: [
@@ -74,6 +75,11 @@ let dinding1 = {
   },
   color: "black",
 };
+
+//sound-effect
+var gameOver = new Audio("Asset/game-over.mp3");
+var levelUp = new Audio("Asset/Level-up.mp3");
+var minusLife = new Audio("Asset/Minus-heart.mp3");
 
 function drawCell(context, x, y, color) {
   context.beginPath();
@@ -251,23 +257,33 @@ function teleport(snake) {
   }
 }
 
+function levelCheck(snake) {
+  if (snake.score % 5 === 0) {
+    // level++;
+    levelUp.play();
+  }
+}
+
 function eat(snake, apple, apple1, heart) {
   if (snake.head.x == apple.position.x && snake.head.y == apple.position.y) {
     apple.position = initPosition();
     snake.score++;
     snake.body.push({ x: snake.head.x, y: snake.head.y });
+    levelCheck(snake);
   }
 
   if (snake.head.x == apple1.position.x && snake.head.y == apple1.position.y) {
     apple1.position = initPosition();
     snake.score++;
     snake.body.push({ x: snake.head.x, y: snake.head.y });
+    levelCheck(snake);
   }
 
   if (snake.head.x == heart.position.x && snake.head.y == heart.position.y) {
     heart.position = initPosition();
     snake.score++;
     snake.life++;
+    levelCheck(snake);
   }
 }
 
@@ -313,10 +329,10 @@ function checkCollision(snakes) {
 
   for (let i = 0; i < snakes.length; i++) {
     for (let j = 0; j < dinding1.length; j++) {
-      for (let k = 1; k < dinding1.position[j].length; k++) {
+      for (let k = 0; k < dinding1.position.x.length; k++) {
         if (
-          snakes[i].head.x == dinding1.position.x[j][k] &&
-          snakes[i].head.y == dinding1.position.y[j][k]
+          snakes.head.x == dinding1.position.x[k][j] &&
+          snakes.head.y == dinding1.position.y[k][j]
         ) {
           isCollide = true;
         }
@@ -326,8 +342,7 @@ function checkCollision(snakes) {
 
   if (isCollide) {
     snake1.life--;
-    // alert("Game over");
-
+    minusLife.play();
     // life
     if (snake1.life > 0) {
       snake1 = {
@@ -336,6 +351,9 @@ function checkCollision(snakes) {
         direction: initDirection(),
       };
     } else if (snake1.life === 0) {
+      alert("Game over");
+      gameOver.play();
+
       snake1 = initSnake("green");
     }
   }
