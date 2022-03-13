@@ -7,13 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="index.js"></script>
     <style>
+        body {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* display: flex; */
+        }
+
         span {
             font-size: 24px;
             font-weight: bold;
         }
 
+        input {
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         canvas {
-            border: 1px solid #000000;
+            border: 5px solid #2D9BF0;
+            background-color: #E3D3D3;
         }
     </style>
 
@@ -21,14 +35,13 @@
 </head>
 
 <body onload="draw();">
-    <center>
-        <canvas id="snakeBoard" width="600" height="600"></canvas>
-        <h2>Snake Game Level <input type="text" name="lv" id="lv" value=""></h2>
-        <span>Score</span>
-        <br>
-        <canvas id="infoboard" width="500" height="50"></canvas>
-        <canvas id="score1Board" width="100" height="50"></canvas>
-    </center>
+    <!-- heart sama level -->
+    <canvas id="infoboard" width="600" height="50"></canvas><br>
+    <canvas id="snakeBoard" width="600" height="600"></canvas><br>
+    <canvas id="score1Board" width="600" height="50"></canvas>
+
+
+    <br><span>Speed : <input type="text" name="speed" id="speed" value=""></span>
 
     <img id="apple" width="30" height="30" src="assets/apple.png" alt="Apple" hidden />
     <img id="heart" width="30" height="30" src="assets/heart.png" alt="Heart" hidden />
