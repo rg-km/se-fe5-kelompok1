@@ -104,6 +104,7 @@ let wall4 = {
 var gameOver = new Audio('Asset/game-over.mp3');
 var levelUp = new Audio('Asset/Level-up.mp3');
 var minusLife = new Audio('Asset/Minus-heart.mp3');
+var Win = new Audio('Asset/win.mp3');
 
 
 
@@ -269,7 +270,7 @@ function draw() {
               ctx.drawImage(heart_img, heart.position.x * CELL_SIZE, heart.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
           }
-          
+
         //Score
         drawScore(snake1);
 
@@ -353,7 +354,9 @@ function moveUp(snake) {
 function gamewin(snake){
     if (snake.score === 25){
         alert("YOU WIN, Score =" + snake.score);
+        // Win.play();
         snake1 = initSnake("green");
+        // initGame();
     }
 }
 
@@ -414,8 +417,6 @@ function checkCollision(snakes) {
             snake1 = initSnake("green");
         }
     }
-
-    gamewin(snake1);
 
     return isCollide;
 }
@@ -479,4 +480,5 @@ function initGame() {
     move(snake1);
 }
 
+gamewin(snake1);
 initGame();
