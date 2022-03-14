@@ -43,6 +43,12 @@ function initSnake(color) {
     }
 }
 
+//start pause
+function gameReset(){
+    snake1.initSnake();
+    alert("Game Reset");
+} 
+
 //variable
 let snake1 = initSnake("green");
 
@@ -161,7 +167,7 @@ function drawLevel(context, snake){
             drawObstacle(context, wall3.position.x[i], wall3.position.y[i], wall3.color);
         }
     } 
-    else if (snake.score <25){
+    else if (snake.score >= 20){
         lv = "5";
         MOVE_INTERVAL = speed - 80;
         
@@ -226,8 +232,7 @@ function drawlife(img, snake) {
     }
 }
 
-//prima
-
+//fungsi utama
 function draw() {
     setInterval(function () {
         let snakeCanvas = document.getElementById("snakeBoard");
@@ -252,7 +257,7 @@ function draw() {
         ctx.drawImage(img, apple1.position.x * CELL_SIZE, apple1.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         ctx.drawImage(img, apple.position.x * CELL_SIZE, apple.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
-        //heart
+        //heart with Prima Number
         if (snake1.score > 1) {
             for (let i = 2; i < snake1.score; i++) {
               if (snake1.score % i == 0) {
@@ -264,6 +269,7 @@ function draw() {
               ctx.drawImage(heart_img, heart.position.x * CELL_SIZE, heart.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
           }
+          
         //Score
         drawScore(snake1);
 
@@ -287,10 +293,13 @@ function teleport(snake) {
     }
 }
 
-function levelCheck(snake) {
+function levelCheck(snake, apple, apple1) {
     if(snake.score % 5 === 0){
-        // level++;
         levelUp.play();
+        alert("Naik Level!!!");
+        apple.position = initPosition();
+        apple1.position = initPosition();
+        
     }
 }
 
@@ -299,21 +308,21 @@ function eat(snake, apple, apple1, heart) {
         apple.position = initPosition();
         snake.score++;
         snake.body.push({ x: snake.head.x, y: snake.head.y });
-        levelCheck(snake);
+        levelCheck(snake, apple, apple1);
     }
 
     if (snake.head.x == apple1.position.x && snake.head.y == apple1.position.y) {
         apple1.position = initPosition();
         snake.score++;
         snake.body.push({ x: snake.head.x, y: snake.head.y });
-        levelCheck(snake);
+        levelCheck(snake, apple, apple1);
     }
 
     if (snake.head.x == heart.position.x && snake.head.y == heart.position.y) {
         heart.position = initPosition();
         snake.score++;
         snake.life++;
-        levelCheck(snake);
+        levelCheck(snake, apple, apple1);
     }
 }
 
@@ -339,6 +348,13 @@ function moveUp(snake) {
     snake.head.y--;
     teleport(snake);
     eat(snake, apple, apple1, heart);
+}
+
+function gamewin(snake){
+    if (snake.score === 25){
+        alert("YOU WIN, Score =" + snake.score);
+        snake1 = initSnake("green");
+    }
 }
 
 function checkCollision(snakes) {
@@ -392,12 +408,14 @@ function checkCollision(snakes) {
                 direction: initDirection(),
             }
         } else if(snake1.life === 0){
-            alert("Game over");
+            alert("Game over, Score Point = "+ snake1.score);
             gameOver.play();
            
             snake1 = initSnake("green");
         }
     }
+
+    gamewin(snake1);
 
     return isCollide;
 }
