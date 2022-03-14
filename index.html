@@ -7,18 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="index.js"></script>
     <style>
-        body {
+        body{
             justify-content: center;
             align-items: center;
             text-align: center;
-        }
 
+            /* background-color: yellow; */
+        }
         span {
             font-size: 24px;
             font-weight: bold;
         }
 
-        input {
+        input{
             border: none;
             font-size: 20px;
             font-weight: bold;
@@ -28,18 +29,18 @@
             border: 5px solid #2D9BF0;
             background-color: #E3D3D3;
         }
+
     </style>
 
     <title>Snake Game - Kelompok 1</title>
 </head>
-
 <body onload="draw();"">
-    <canvas id=" infoboard" width="600" height="50"></canvas><br>
+    <canvas id="infoboard" width="600" height="50"></canvas><br>
     <canvas id="snakeBoard" width="600" height="600"></canvas><br>
     <canvas id="score1Board" width="600" height="50"></canvas>
 
-    <img id="apple" width="30" height="30" src="assets/apple.png" alt="Apple" hidden />
-    <img id="heart" width="30" height="30" src="assets/heart.png" alt="Heart" hidden />
+    <img id="apple" width="30" height="30" src="Asset/apple.png" alt="Apple" hidden />
+    <img id="heart" width="30" height="30" src="Asset/heart.png" alt="Heart" hidden />
 </body>
 
 </html>
